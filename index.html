@@ -20,11 +20,23 @@
       <h2>1. 音源</h2>
       <input id="audioFile" type="file" accept="audio/*" />
       <audio id="audio" controls preload="metadata"></audio>
+
       <div class="row controls">
         <button id="back3">−3秒</button>
         <button id="playPause">再生 / 停止</button>
         <button id="forward3">＋3秒</button>
       </div>
+
+      <div class="speedBox">
+        <div class="smallLabel">再生速度</div>
+        <div class="row speedControls">
+          <button class="speedBtn" data-rate="0.5">0.5倍</button>
+          <button class="speedBtn" data-rate="0.75">0.75倍</button>
+          <button class="speedBtn" data-rate="1">1.0倍</button>
+        </div>
+        <p class="hint">ゆっくり再生して打刻しても、出力される時刻は元曲のタイムラインです。</p>
+      </div>
+
       <div class="timebar">
         <span id="now">00:00.000</span>
         <span id="duration">--:--.---</span>
@@ -48,12 +60,24 @@
       <div class="progress"><span id="progressText">0 / 0</span></div>
 
       <div class="phrase-box">
-        <div class="label">今押すフレーズ</div>
-        <div id="currentPhrase" class="current">歌詞をセットしてください</div>
+        <div class="prev-block">
+          <div class="label">前のフレーズ</div>
+          <div id="prevPhrase" class="prev">---</div>
+        </div>
+
+        <div class="current-block">
+          <div class="label">今押すフレーズ</div>
+          <div id="currentPhrase" class="current">歌詞をセットしてください</div>
+        </div>
 
         <div class="next-block">
           <div class="label">次のフレーズ</div>
           <div id="nextPhrase" class="next">---</div>
+        </div>
+
+        <div class="next-block next2-block">
+          <div class="label">次の次</div>
+          <div id="nextNextPhrase" class="next2">---</div>
         </div>
       </div>
 
@@ -66,6 +90,7 @@
 
       <div class="row controls">
         <button id="undo">1つ戻す</button>
+        <button id="redoLast">直前をやり直す</button>
         <button id="skip">この行スキップ</button>
       </div>
 
