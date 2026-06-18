@@ -21,12 +21,6 @@
       <input id="audioFile" type="file" accept="audio/*" />
       <audio id="audio" controls preload="metadata"></audio>
 
-      <div class="row controls">
-        <button id="back3">−3秒</button>
-        <button id="playPause">再生 / 停止</button>
-        <button id="forward3">＋3秒</button>
-      </div>
-
       <div class="speedBox">
         <div class="smallLabel">再生速度</div>
         <div class="row speedControls">
@@ -57,42 +51,12 @@
 
     <section class="card tap-card">
       <h2>3. 打刻</h2>
-      <div class="progress"><span id="progressText">0 / 0</span></div>
-
-      <div class="phrase-box">
-        <div class="prev-block">
-          <div class="label">前のフレーズ</div>
-          <div id="prevPhrase" class="prev">---</div>
-        </div>
-
-        <div class="current-block">
-          <div class="label">今押すフレーズ</div>
-          <div id="currentPhrase" class="current">歌詞をセットしてください</div>
-        </div>
-
-        <div class="next-block">
-          <div class="label">次のフレーズ</div>
-          <div id="nextPhrase" class="next">---</div>
-        </div>
-
-        <div class="next-block next2-block">
-          <div class="label">次の次</div>
-          <div id="nextNextPhrase" class="next2">---</div>
-        </div>
-      </div>
-
-      <button id="tapButton" class="tap">ハイ！</button>
+      <p class="hint">打刻操作は画面下に固定表示されます。前・今・次の歌詞を見ながら、口ずさんで「ハイ！」を押してください。</p>
 
       <label class="soundToggle">
         <input id="tapSound" type="checkbox" checked />
         ハイ！ボタンを押した時に音を鳴らす
       </label>
-
-      <div class="row controls">
-        <button id="undo">1つ戻す</button>
-        <button id="redoLast">直前をやり直す</button>
-        <button id="skip">この行スキップ</button>
-      </div>
 
       <div class="adjust">
         <label>タップ反応補正：<span id="latencyValue">-120</span>ms</label>
@@ -101,8 +65,8 @@
       </div>
 
       <div class="row controls">
-        <button id="lastMinus">最後の時刻 −0.05秒</button>
-        <button id="lastPlus">最後の時刻 ＋0.05秒</button>
+        <button id="lastMinus">最後の歌詞 −0.05秒</button>
+        <button id="lastPlus">最後の歌詞 ＋0.05秒</button>
       </div>
     </section>
 
@@ -123,6 +87,41 @@
       <div id="list" class="list"></div>
     </section>
   </main>
+
+  <section class="tap-dock" aria-label="打刻操作">
+    <div class="tap-dock-inner">
+      <div class="dock-topline">
+        <span id="progressText">0 / 0</span>
+        <span class="dock-preview-label">表示中</span>
+      </div>
+
+      <div id="livePreview" class="live-preview">---</div>
+
+      <div class="dock-phrases" aria-label="歌詞カンペ">
+        <div class="dock-phrase dock-prev">
+          <div class="dock-label">前</div>
+          <div id="prevPhrase" class="dock-text">---</div>
+        </div>
+        <div class="dock-phrase dock-current">
+          <div class="dock-label">今押す</div>
+          <div id="currentPhrase" class="dock-text">歌詞をセットしてください</div>
+        </div>
+        <div class="dock-phrase dock-next">
+          <div class="dock-label">次</div>
+          <div id="nextPhrase" class="dock-text">---</div>
+        </div>
+      </div>
+
+      <div id="nextNextPhrase" class="next-next">次の次：---</div>
+
+      <div class="dock-controls">
+        <button id="restart" class="dock-small">最初から</button>
+        <button id="playPause" class="dock-small">▶</button>
+        <button id="tapButton" class="tap dock-tap">ハイ！</button>
+        <button id="clearCaption" class="clearTap" title="今の位置で歌詞を消す">消</button>
+      </div>
+    </div>
+  </section>
 
   <footer><p>Offline PWA / No server upload. 音源は端末内で再生します。</p></footer>
   <script src="./app.js"></script>
