@@ -33,29 +33,36 @@
 
     <section class="card">
       <h2>2. 歌詞</h2>
-      <label>打刻用歌詞（ローマ字など。空行は無視）</label>
-      <textarea id="tapLyrics" placeholder="kuroi taiyou ga\nsora wo yaki tsukusu"></textarea>
-
-      <label>字幕表示用歌詞（任意。同じ行数ならこちらを出力）</label>
-      <textarea id="displayLyrics" placeholder="黒い太陽が\n空を焼き尽くす"></textarea>
+      <label>歌詞（1行1フレーズ。空行は無視）</label>
+      <textarea id="lyrics" placeholder="黒い太陽が&#10;空を焼き尽くす&#10;ガラスの街で"></textarea>
 
       <div class="row">
         <button id="loadLyrics">歌詞をセット</button>
         <button id="clearAll" class="danger">全消去</button>
       </div>
-      <p class="hint">ローマ字で聞き取りながら打刻、日本語でSRT出力、みたいな使い方ができます。</p>
+      <p class="hint">ここに入れた行が、そのままSRT / LRCの字幕になります。</p>
     </section>
 
     <section class="card tap-card">
       <h2>3. 打刻</h2>
       <div class="progress"><span id="progressText">0 / 0</span></div>
+
       <div class="phrase-box">
-        <div class="label">現在のフレーズ</div>
+        <div class="label">今押すフレーズ</div>
         <div id="currentPhrase" class="current">歌詞をセットしてください</div>
-        <div id="displayPhrase" class="display"></div>
+
+        <div class="next-block">
+          <div class="label">次のフレーズ</div>
+          <div id="nextPhrase" class="next">---</div>
+        </div>
       </div>
 
       <button id="tapButton" class="tap">ハイ！</button>
+
+      <label class="soundToggle">
+        <input id="tapSound" type="checkbox" checked />
+        ハイ！ボタンを押した時に音を鳴らす
+      </label>
 
       <div class="row controls">
         <button id="undo">1つ戻す</button>
