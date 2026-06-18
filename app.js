@@ -1,5 +1,5 @@
 const $=id=>document.getElementById(id);
-const audioFile=$("audioFile"),audio=$("audio"),lyrics=$("lyrics"),loadLyrics=$("loadLyrics"),clearAll=$("clearAll"),playPause=$("playPause"),restart=$("restart"),now=$("now"),durationEl=$("duration"),progressText=$("progressText"),prevPhrase=$("prevPhrase"),currentPhrase=$("currentPhrase"),nextPhrase=$("nextPhrase"),nextNextPhrase=$("nextNextPhrase"),livePreview=$("livePreview"),tapButton=$("tapButton"),clearCaption=$("clearCaption"),tapSound=$("tapSound"),latency=$("latency"),latencyValue=$("latencyValue"),lastMinus=$("lastMinus"),lastPlus=$("lastPlus"),exportLrc=$("exportLrc"),exportSrt=$("exportSrt"),exportCsv=$("exportCsv"),exportJson=$("exportJson"),importJson=$("importJson"),output=$("output"),list=$("list");
+const audioFile=$("audioFile"),audio=$("audio"),lyrics=$("lyrics"),loadLyrics=$("loadLyrics"),clearAll=$("clearAll"),playPause=$("playPause"),restart=$("restart"),now=$("now"),durationEl=$("duration"),progressText=$("progressText"),prevPhrase=$("prevPhrase"),currentPhrase=$("currentPhrase"),nextPhrase=$("nextPhrase"),nextNextPhrase=$("nextNextPhrase"),livePreview=$("livePreview"),tapButton=$("tapButton"),clearCaption=$("clearCaption"),tapSound=$("tapSound"),latency=$("latency"),latencyValue=$("latencyValue"),lastMinus=$("lastMinus"),lastPlus=$("lastPlus"),exportLrc=$("exportLrc"),exportSrt=$("exportSrt"),exportCsv=$("exportCsv"),exportJson=$("exportJson"),importJson=$("importJson"),output=$("output"),list=$("list"),viewToggle=$("viewToggle"),tapView=$("tapView"),settingsView=$("settingsView"),pageHint=$("pageHint");
 const speedButtons=[...document.querySelectorAll(".speedBtn")];
 let state={lines:[],times:[],clearTimes:[],index:0,latencyMs:-120,rate:1};
 function parseLines(t){return t.split(/\r?\n/).map(s=>s.trim()).filter(Boolean)}
@@ -11,8 +11,8 @@ function normalizeState(){state.lines=Array.isArray(state.lines)?state.lines:[];
 function setRate(rate){state.rate=rate;audio.playbackRate=rate;updateSpeedButtons();saveLocal()}
 function updateSpeedButtons(){speedButtons.forEach(b=>b.classList.toggle("active",Number(b.dataset.rate)===Number(state.rate||1)))}
 function storagePayload(){normalizeState();return {lyricText:lyrics.value,state}}
-function saveLocal(){localStorage.setItem("lyricTapperProjectV10",JSON.stringify(storagePayload()))}
-function loadLocal(){const raw=localStorage.getItem("lyricTapperProjectV10")||localStorage.getItem("lyricTapperProjectV9")||localStorage.getItem("lyricTapperProjectV7")||localStorage.getItem("lyricTapperProjectV6")||localStorage.getItem("lyricTapperProjectV5")||localStorage.getItem("lyricTapperProjectV3");if(!raw){setRate(1);return}try{const d=JSON.parse(raw);lyrics.value=d.lyricText||d.tapText||"";if(d.state){if(d.state.lines){state={...state,...d.state};}else if(d.state.tapLines){state={lines:d.state.displayLines?.length===d.state.tapLines?.length?d.state.displayLines:d.state.tapLines,times:d.state.times||[],clearTimes:d.state.clearTimes||[],index:d.state.index||0,latencyMs:d.state.latencyMs??-120,rate:1}}}normalizeState();latency.value=state.latencyMs??-120;setRate(state.rate||1);update()}catch{setRate(1)}}
+function saveLocal(){localStorage.setItem("lyricTapperProjectV13",JSON.stringify(storagePayload()))}
+function loadLocal(){const raw=localStorage.getItem("lyricTapperProjectV13")||localStorage.getItem("lyricTapperProjectV10")||localStorage.getItem("lyricTapperProjectV9")||localStorage.getItem("lyricTapperProjectV7")||localStorage.getItem("lyricTapperProjectV6")||localStorage.getItem("lyricTapperProjectV5")||localStorage.getItem("lyricTapperProjectV3");if(!raw){setRate(1);return}try{const d=JSON.parse(raw);lyrics.value=d.lyricText||d.tapText||"";if(d.state){if(d.state.lines){state={...state,...d.state};}else if(d.state.tapLines){state={lines:d.state.displayLines?.length===d.state.tapLines?.length?d.state.displayLines:d.state.tapLines,times:d.state.times||[],clearTimes:d.state.clearTimes||[],index:d.state.index||0,latencyMs:d.state.latencyMs??-120,rate:1}}}normalizeState();latency.value=state.latencyMs??-120;setRate(state.rate||1);update()}catch{setRate(1)}}
 function lyricRows(){normalizeState();return state.lines.map((line,i)=>({type:"lyric",i,line,raw:state.times[i]})).filter(r=>typeof r.raw==="number").map(r=>({...r,time:adjusted(r.raw)}))}
 function clearRows(){normalizeState();return state.clearTimes.filter(t=>typeof t==="number").map((raw,i)=>({type:"clear",i,line:"",raw,time:adjusted(raw)}))}
 function events(){return [...lyricRows(),...clearRows()].sort((a,b)=>a.time-b.time || (a.type==="clear"?1:-1))}
@@ -47,9 +47,19 @@ function download(name,text,type="text/plain"){output.value=text;const blob=new 
 exportLrc.onclick=()=>download("lyrics_timing.lrc",makeLrc());
 exportSrt.onclick=()=>download("lyrics_timing.srt",makeSrt(),"application/x-subrip");
 exportCsv.onclick=()=>download("lyrics_timing.csv",makeCsv(),"text/csv");
-exportJson.onclick=()=>download("lyrics_tapper_project.json",JSON.stringify({app:"歌詞ハイ！タイマー",version:10,lyricText:lyrics.value,state},null,2),"application/json");
+exportJson.onclick=()=>download("lyrics_tapper_project.json",JSON.stringify({app:"歌詞ハイ！タイマー",version:13,lyricText:lyrics.value,state},null,2),"application/json");
 importJson.onchange=async()=>{const f=importJson.files[0];if(!f)return;try{const d=JSON.parse(await f.text());lyrics.value=d.lyricText||d.tapText||"";if(d.state){if(d.state.lines){state={...state,...d.state};}else if(d.state.tapLines){state={lines:d.state.displayLines?.length===d.state.tapLines?.length?d.state.displayLines:d.state.tapLines,times:d.state.times||[],clearTimes:d.state.clearTimes||[],index:d.state.index||0,latencyMs:d.state.latencyMs??-120,rate:1}}}normalizeState();latency.value=state.latencyMs??-120;setRate(state.rate||1);update()}catch{alert("JSONを読み込めませんでした")}};
-clearAll.onclick=()=>{if(!confirm("作業データを消しますか？"))return;state={lines:[],times:[],clearTimes:[],index:0,latencyMs:-120,rate:1};lyrics.value="";latency.value=-120;localStorage.removeItem("lyricTapperProjectV10");localStorage.removeItem("lyricTapperProjectV9");localStorage.removeItem("lyricTapperProjectV7");localStorage.removeItem("lyricTapperProjectV6");localStorage.removeItem("lyricTapperProjectV5");update()};
+clearAll.onclick=()=>{if(!confirm("作業データを消しますか？"))return;state={lines:[],times:[],clearTimes:[],index:0,latencyMs:-120,rate:1};lyrics.value="";latency.value=-120;localStorage.removeItem("lyricTapperProjectV13");localStorage.removeItem("lyricTapperProjectV10");localStorage.removeItem("lyricTapperProjectV9");localStorage.removeItem("lyricTapperProjectV7");localStorage.removeItem("lyricTapperProjectV6");localStorage.removeItem("lyricTapperProjectV5");update()};
+
+function showView(name){
+  const settings=name==="settings";
+  tapView.classList.toggle("hidden",settings);
+  settingsView.classList.toggle("hidden",!settings);
+  viewToggle.textContent=settings?"打刻へ":"設定";
+  pageHint.textContent=settings?"音源・歌詞・補正・出力をここで設定。":"前・今・次・次の次を見ながら、曲に合わせて「ハイ！」。";
+  document.body.classList.toggle("settings-mode",settings);
+}
+viewToggle.onclick=()=>showView(settingsView.classList.contains("hidden")?"settings":"tap");
 document.onkeydown=e=>{if(["TEXTAREA","INPUT"].includes(e.target.tagName))return;if(e.code==="Space"){e.preventDefault();tapButton.click()}else if(e.code==="Enter"){e.preventDefault();playPause.click()}else if(e.key.toLowerCase()==="c"){e.preventDefault();clearCaption.click()}else if(e.key.toLowerCase()==="r"){e.preventDefault();restart.click()}else if(e.key==="1"){setRate(.5)}else if(e.key==="2"){setRate(.75)}else if(e.key==="3"){setRate(1)}};
 if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));
 loadLocal();
