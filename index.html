@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#111827" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="apple-touch-icon" href="./icons/icon-192.png" />
-  <title>歌詞ハイ！タイマー v9</title>
+  <title>歌詞ハイ！タイマー v10</title>
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
@@ -97,13 +97,6 @@
 
       <div id="livePreview" class="live-preview">---</div>
 
-      <div class="dock-controls" aria-label="再生と打刻">
-        <button id="restart" class="dock-small">最初から</button>
-        <button id="playPause" class="dock-small">▶</button>
-        <button id="tapButton" class="tap dock-tap">ハイ！</button>
-        <button id="clearCaption" class="clearTap" title="今の位置で歌詞を消す">消</button>
-      </div>
-
       <div class="dock-phrases" aria-label="歌詞カンペ">
         <div class="dock-phrase dock-prev">
           <div class="dock-label">前</div>
@@ -121,6 +114,14 @@
           <div class="dock-label">次の次</div>
           <div id="nextNextPhrase" class="dock-text">---</div>
         </div>
+      </div>
+
+
+      <div class="dock-controls" aria-label="再生と打刻">
+        <button id="restart" class="dock-small">最初から</button>
+        <button id="playPause" class="dock-small">▶</button>
+        <button id="tapButton" class="tap dock-tap">ハイ！</button>
+        <button id="clearCaption" class="clearTap" title="今の位置で歌詞を消す">消</button>
       </div>
     </div>
   </section>
