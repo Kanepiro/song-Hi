@@ -217,3 +217,103 @@ input[type=range]{width:100%}
   .dock-controls button,.dock-tools button{min-height:50px}
   .dock-tap{min-height:94px;margin-bottom:calc(16px + env(safe-area-inset-bottom))}
 }
+
+/* v14: 実機でハイ！ボタンが下に張り付かないように、打刻画面を上寄せ・コンパクト化 */
+.tap-view{
+  min-height:auto;
+  align-items:flex-start;
+}
+.tap-panel{
+  margin-bottom:max(18px,calc(14px + env(safe-area-inset-bottom)));
+}
+.tap-panel-inner{
+  min-height:0;
+  justify-content:flex-start;
+  gap:clamp(8px,1.45vh,16px);
+  padding-bottom:max(50px,calc(42px + env(safe-area-inset-bottom)));
+}
+.live-preview{
+  min-height:clamp(44px,6vh,66px);
+}
+.dock-phrases{
+  gap:clamp(6px,1vh,10px);
+}
+.dock-phrase{
+  min-height:clamp(36px,5.2vh,54px);
+  padding:clamp(6px,1vh,10px) 11px;
+}
+.dock-controls{
+  gap:clamp(12px,1.8vh,18px);
+  margin-top:clamp(2px,.7vh,8px);
+  margin-bottom:max(34px,calc(28px + env(safe-area-inset-bottom)));
+}
+.dock-controls button,.dock-tools button{
+  min-height:clamp(50px,6.5vh,66px);
+}
+.dock-tap{
+  min-height:clamp(96px,13vh,126px);
+  margin:0;
+}
+
+@media(max-width:560px){
+  .app-header,main,footer{padding:10px 12px}
+  header h1{margin:8px 0 4px;font-size:24px}
+  header p{margin:6px 0 8px;line-height:1.28;font-size:16px}
+  .settingsButton{padding:9px 13px;min-height:40px}
+  .tap-view{min-height:auto}
+  .tap-panel{margin:2px 0 max(14px,calc(10px + env(safe-area-inset-bottom)));border-radius:24px}
+  .tap-panel-inner{
+    min-height:0;
+    justify-content:flex-start;
+    padding:10px 10px max(54px,calc(48px + env(safe-area-inset-bottom)));
+    gap:8px;
+  }
+  .dock-topline{font-size:13px}
+  .dock-preview-label{font-size:12px}
+  .live-preview{
+    min-height:42px;
+    padding:8px 10px;
+    border-radius:14px;
+    font-size:clamp(16px,4.7vw,22px);
+  }
+  .dock-phrases{gap:6px}
+  .dock-phrase{
+    grid-template-columns:4.3em 1fr;
+    gap:7px;
+    min-height:38px;
+    padding:6px 9px;
+    border-radius:14px;
+  }
+  .dock-label{font-size:11px}
+  .dock-prev .dock-text{font-size:clamp(14px,3.8vw,19px)}
+  .dock-current .dock-text{font-size:clamp(20px,5.8vw,30px)}
+  .dock-next .dock-text{font-size:clamp(16px,4.6vw,24px)}
+  .dock-next-next .dock-text{font-size:clamp(14px,4vw,20px)}
+  .dock-controls{
+    gap:12px;
+    margin-top:2px;
+    margin-bottom:max(40px,calc(34px + env(safe-area-inset-bottom)));
+  }
+  .dock-tools{grid-template-columns:1.2fr .78fr .68fr;gap:10px}
+  .dock-controls button,.dock-tools button{min-height:54px;padding:8px 6px}
+  .dock-small{font-size:clamp(15px,4.2vw,22px)}
+  .clearTap{font-size:clamp(18px,5.3vw,28px)}
+  .dock-tap{
+    min-height:100px;
+    font-size:clamp(44px,14vw,72px);
+    border-radius:24px;
+    margin:0;
+  }
+}
+
+@media(max-height:650px){
+  header p{font-size:14px;line-height:1.22;margin:4px 0 6px}
+  header h1{font-size:22px;margin-top:6px}
+  .tap-panel-inner{min-height:0;gap:6px;padding:8px 9px max(40px,calc(34px + env(safe-area-inset-bottom)))}
+  .live-preview{min-height:36px;padding:6px 8px}
+  .dock-phrases{gap:5px}
+  .dock-phrase{min-height:32px;padding:5px 8px}
+  .dock-controls{gap:8px;margin-bottom:max(28px,calc(22px + env(safe-area-inset-bottom)))}
+  .dock-controls button,.dock-tools button{min-height:46px}
+  .dock-tap{min-height:82px;font-size:clamp(38px,13vw,62px)}
+}

@@ -1,4 +1,4 @@
-const CACHE_NAME = "lyric-tapper-pwa-v13-two-page-ui";
+const CACHE_NAME = "lyric-tapper-pwa-v14-button-up-ui";
 const ASSETS = [
   "./",
   "./index.html",
