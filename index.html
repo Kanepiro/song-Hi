@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+  <title>歌詞ハイ！タイマー</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header>
+    <h1>歌詞ハイ！タイマー</h1>
+    <p>曲を流して、フレーズが来た瞬間に「ハイ！」でタイムテーブル化。</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>1. 音源</h2>
+      <input id="audioFile" type="file" accept="audio/*" />
+      <audio id="audio" controls preload="metadata"></audio>
+      <div class="row controls">
+        <button id="back3">−3秒</button>
+        <button id="playPause">再生 / 停止</button>
+        <button id="forward3">＋3秒</button>
+      </div>
+      <div class="timebar">
+        <span id="now">00:00.000</span>
+        <span id="duration">--:--.---</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. 歌詞</h2>
+      <label>打刻用歌詞（ローマ字など。空行は無視）</label>
+      <textarea id="tapLyrics" placeholder="kuroi taiyou ga\nsora wo yaki tsukusu"></textarea>
+
+      <label>字幕表示用歌詞（任意。同じ行数ならこちらを出力）</label>
+      <textarea id="displayLyrics" placeholder="黒い太陽が\n空を焼き尽くす"></textarea>
+
+      <div class="row">
+        <button id="loadLyrics">歌詞をセット</button>
+        <button id="clearAll" class="danger">全消去</button>
+      </div>
+      <p class="hint">ローマ字で聞き取りながら打刻、日本語でSRT出力、みたいな使い方ができます。</p>
+    </section>
+
+    <section class="card tap-card">
+      <h2>3. 打刻</h2>
+      <div class="progress"><span id="progressText">0 / 0</span></div>
+      <div class="phrase-box">
+        <div class="label">現在のフレーズ</div>
+        <div id="currentPhrase" class="current">歌詞をセットしてください</div>
+        <div id="displayPhrase" class="display"></div>
+      </div>
+
+      <button id="tapButton" class="tap">ハイ！</button>
+
+      <div class="row controls">
+        <button id="undo">1つ戻す</button>
+        <button id="skip">この行スキップ</button>
+      </div>
+
+      <div class="adjust">
+        <label>タップ反応補正：<span id="latencyValue">-120</span>ms</label>
+        <input id="latency" type="range" min="-300" max="100" step="10" value="-120" />
+        <p class="hint">聞いてから押すぶん遅れるので、出力時にこの値だけ全体補正します。</p>
+      </div>
+
+      <div class="row controls">
+        <button id="lastMinus">最後の時刻 −0.05秒</button>
+        <button id="lastPlus">最後の時刻 ＋0.05秒</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4. 出力</h2>
+      <div class="row wrap">
+        <button id="exportLrc">LRC出力</button>
+        <button id="exportSrt">SRT出力</button>
+        <button id="exportCsv">CSV出力</button>
+        <button id="exportJson">作業データ保存</button>
+        <label class="importLabel">作業データ読込<input id="importJson" type="file" accept="application/json" /></label>
+      </div>
+      <textarea id="output" readonly placeholder="ここに出力内容が表示されます"></textarea>
+    </section>
+
+    <section class="card">
+      <h2>打刻リスト</h2>
+      <div id="list" class="list"></div>
+    </section>
+  </main>
+
+  <footer><p>Offline PWA / No server upload. 音源は端末内で再生します。</p></footer>
+  <script src="./app.js"></script>
+</body>
+</html>
