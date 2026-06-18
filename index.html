@@ -6,127 +6,133 @@
   <meta name="theme-color" content="#111827" />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="apple-touch-icon" href="./icons/icon-192.png" />
-  <title>歌詞ハイ！タイマー v12</title>
+  <title>歌詞ハイ！タイマー v15</title>
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <header>
-    <h1>歌詞ハイ！タイマー</h1>
-    <p>曲を流して、フレーズが来た瞬間に「ハイ！」でタイムテーブル化。</p>
+  <header class="app-header">
+    <div class="title-row">
+      <div class="title-copy">
+        <h1>歌詞ハイ！タイマー</h1>
+        <p id="pageHint">前・今・次・次の次を見ながら、曲に合わせて「ハイ！」。</p>
+      </div>
+      <button id="viewToggle" class="settingsButton" type="button">設定</button>
+    </div>
   </header>
 
   <main>
-    <section class="card">
-      <h2>1. 音源</h2>
-      <input id="audioFile" type="file" accept="audio/*" />
-      <audio id="audio" controls preload="metadata"></audio>
+    <section id="tapView" class="view tap-view" aria-label="打刻画面">
+      <section class="tap-panel" aria-label="打刻操作">
+        <div class="tap-panel-inner">
+          <div class="dock-topline">
+            <span id="progressText">0 / 0</span>
+            <span class="dock-preview-label">表示中</span>
+          </div>
 
-      <div class="speedBox">
-        <div class="smallLabel">再生速度</div>
-        <div class="row speedControls">
-          <button class="speedBtn" data-rate="0.5">0.5倍</button>
-          <button class="speedBtn" data-rate="0.75">0.75倍</button>
-          <button class="speedBtn" data-rate="1">1.0倍</button>
+          <div id="livePreview" class="live-preview">---</div>
+
+          <div class="dock-phrases" aria-label="歌詞カンペ">
+            <div class="dock-phrase dock-prev">
+              <div class="dock-label">前</div>
+              <div id="prevPhrase" class="dock-text">---</div>
+            </div>
+            <div class="dock-phrase dock-current">
+              <div class="dock-label">今押す</div>
+              <div id="currentPhrase" class="dock-text">歌詞をセットしてください</div>
+            </div>
+            <div class="dock-phrase dock-next">
+              <div class="dock-label">次</div>
+              <div id="nextPhrase" class="dock-text">---</div>
+            </div>
+            <div class="dock-phrase dock-next-next">
+              <div class="dock-label">次の次</div>
+              <div id="nextNextPhrase" class="dock-text">---</div>
+            </div>
+          </div>
+
+          <div class="dock-controls" aria-label="再生と打刻">
+            <div class="dock-tools" aria-label="補助操作">
+              <button id="restart" class="dock-small" type="button">最初から</button>
+              <button id="playPause" class="dock-small" type="button">▶</button>
+              <button id="clearCaption" class="clearTap" type="button" title="今の位置で歌詞を消す">消</button>
+            </div>
+            <button id="tapButton" class="tap dock-tap" type="button">ハイ！</button>
+          </div>
         </div>
-        <p class="hint">ゆっくり再生して打刻しても、出力される時刻は元曲のタイムラインです。</p>
-      </div>
-
-      <div class="timebar">
-        <span id="now">00:00.000</span>
-        <span id="duration">--:--.---</span>
-      </div>
+      </section>
     </section>
 
-    <section class="card">
-      <h2>2. 歌詞</h2>
-      <label>歌詞（1行1フレーズ。空行は無視）</label>
-      <textarea id="lyrics" placeholder="黒い太陽が&#10;空を焼き尽くす&#10;ガラスの街で"></textarea>
+    <section id="settingsView" class="view settings-view hidden" aria-label="設定画面">
+      <section class="card">
+        <h2>1. 音源</h2>
+        <input id="audioFile" type="file" accept="audio/*" />
+        <audio id="audio" controls preload="metadata"></audio>
 
-      <div class="row">
-        <button id="loadLyrics">歌詞をセット</button>
-        <button id="clearAll" class="danger">全消去</button>
-      </div>
-      <p class="hint">ここに入れた行が、そのままSRT / LRCの字幕になります。</p>
-    </section>
+        <div class="speedBox">
+          <div class="smallLabel">再生速度</div>
+          <div class="row speedControls">
+            <button class="speedBtn" data-rate="0.5" type="button">0.5倍</button>
+            <button class="speedBtn" data-rate="0.75" type="button">0.75倍</button>
+            <button class="speedBtn" data-rate="1" type="button">1.0倍</button>
+          </div>
+          <p class="hint">ゆっくり再生して打刻しても、出力される時刻は元曲のタイムラインです。</p>
+        </div>
 
-    <section class="card tap-card">
-      <h2>3. 打刻</h2>
-      <p class="hint">打刻操作は画面下から少し浮かせて固定表示されます。前・今・次の歌詞を見ながら、口ずさんで「ハイ！」を押してください。</p>
+        <div class="timebar">
+          <span id="now">00:00.000</span>
+          <span id="duration">--:--.---</span>
+        </div>
+      </section>
 
-      <label class="soundToggle">
-        <input id="tapSound" type="checkbox" checked />
-        ハイ！ボタンを押した時に音を鳴らす
-      </label>
+      <section class="card">
+        <h2>2. 歌詞</h2>
+        <label>歌詞（1行1フレーズ。空行は無視）</label>
+        <textarea id="lyrics" placeholder="黒い太陽が&#10;空を焼き尽くす&#10;ガラスの街で"></textarea>
 
-      <div class="adjust">
-        <label>タップ反応補正：<span id="latencyValue">-120</span>ms</label>
-        <input id="latency" type="range" min="-300" max="100" step="10" value="-120" />
-        <p class="hint">聞いてから押すぶん遅れるので、出力時にこの値だけ全体補正します。</p>
-      </div>
+        <div class="row">
+          <button id="loadLyrics" type="button">歌詞をセット</button>
+          <button id="clearAll" class="danger" type="button">全消去</button>
+        </div>
+        <p class="hint">ここに入れた行が、そのままSRT / LRCの字幕になります。</p>
+      </section>
 
-      <div class="row controls">
-        <button id="lastMinus">最後の歌詞 −0.05秒</button>
-        <button id="lastPlus">最後の歌詞 ＋0.05秒</button>
-      </div>
-    </section>
+      <section class="card">
+        <h2>3. 打刻設定</h2>
+        <label class="soundToggle">
+          <input id="tapSound" type="checkbox" checked />
+          ハイ！ボタンを押した時に音を鳴らす
+        </label>
 
-    <section class="card">
-      <h2>4. 出力</h2>
-      <div class="row wrap">
-        <button id="exportLrc">LRC出力</button>
-        <button id="exportSrt">SRT出力</button>
-        <button id="exportCsv">CSV出力</button>
-        <button id="exportJson">作業データ保存</button>
-        <label class="importLabel">作業データ読込<input id="importJson" type="file" accept="application/json" /></label>
-      </div>
-      <textarea id="output" readonly placeholder="ここに出力内容が表示されます"></textarea>
-    </section>
+        <div class="adjust">
+          <label>タップ反応補正：<span id="latencyValue">-120</span>ms</label>
+          <input id="latency" type="range" min="-300" max="100" step="10" value="-120" />
+          <p class="hint">聞いてから押すぶん遅れるので、出力時にこの値だけ全体補正します。</p>
+        </div>
 
-    <section class="card">
-      <h2>打刻リスト</h2>
-      <div id="list" class="list"></div>
+        <div class="row controls">
+          <button id="lastMinus" type="button">最後の歌詞 −0.05秒</button>
+          <button id="lastPlus" type="button">最後の歌詞 ＋0.05秒</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>4. 出力</h2>
+        <div class="row wrap">
+          <button id="exportLrc" type="button">LRC出力</button>
+          <button id="exportSrt" type="button">SRT出力</button>
+          <button id="exportCsv" type="button">CSV出力</button>
+          <button id="exportJson" type="button">作業データ保存</button>
+          <label class="importLabel">作業データ読込<input id="importJson" type="file" accept="application/json" /></label>
+        </div>
+        <textarea id="output" readonly placeholder="ここに出力内容が表示されます"></textarea>
+      </section>
+
+      <section class="card">
+        <h2>打刻リスト</h2>
+        <div id="list" class="list"></div>
+      </section>
     </section>
   </main>
-
-  <section class="tap-dock" aria-label="打刻操作">
-    <div class="tap-dock-inner">
-      <div class="dock-topline">
-        <span id="progressText">0 / 0</span>
-        <span class="dock-preview-label">表示中</span>
-      </div>
-
-      <div id="livePreview" class="live-preview">---</div>
-
-      <div class="dock-phrases" aria-label="歌詞カンペ">
-        <div class="dock-phrase dock-prev">
-          <div class="dock-label">前</div>
-          <div id="prevPhrase" class="dock-text">---</div>
-        </div>
-        <div class="dock-phrase dock-current">
-          <div class="dock-label">今押す</div>
-          <div id="currentPhrase" class="dock-text">歌詞をセットしてください</div>
-        </div>
-        <div class="dock-phrase dock-next">
-          <div class="dock-label">次</div>
-          <div id="nextPhrase" class="dock-text">---</div>
-        </div>
-        <div class="dock-phrase dock-next-next">
-          <div class="dock-label">次の次</div>
-          <div id="nextNextPhrase" class="dock-text">---</div>
-        </div>
-      </div>
-
-
-      <div class="dock-controls" aria-label="再生と打刻">
-        <div class="dock-tools" aria-label="補助操作">
-          <button id="restart" class="dock-small">最初から</button>
-          <button id="playPause" class="dock-small">▶</button>
-          <button id="clearCaption" class="clearTap" title="今の位置で歌詞を消す">消</button>
-        </div>
-        <button id="tapButton" class="tap dock-tap">ハイ！</button>
-      </div>
-    </div>
-  </section>
 
   <footer><p>Offline PWA / No server upload. 音源は端末内で再生します。</p></footer>
   <script src="./app.js"></script>

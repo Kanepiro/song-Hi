@@ -218,54 +218,64 @@ input[type=range]{width:100%}
   .dock-tap{min-height:94px;margin-bottom:calc(16px + env(safe-area-inset-bottom))}
 }
 
-/* v14: 実機でハイ！ボタンが下に張り付かないように、打刻画面を上寄せ・コンパクト化 */
+
+/* v15: 2ページ構造を維持したまま、打刻画面だけ上寄せ・親指用余白を確保 */
+body:not(.settings-mode) main{
+  padding-top:6px;
+}
+body:not(.settings-mode) footer{
+  display:none;
+}
 .tap-view{
   min-height:auto;
+  display:flex;
   align-items:flex-start;
 }
 .tap-panel{
-  margin-bottom:max(18px,calc(14px + env(safe-area-inset-bottom)));
+  margin:2px 0 max(22px,calc(18px + env(safe-area-inset-bottom)));
 }
 .tap-panel-inner{
   min-height:0;
   justify-content:flex-start;
-  gap:clamp(8px,1.45vh,16px);
-  padding-bottom:max(50px,calc(42px + env(safe-area-inset-bottom)));
+  gap:clamp(10px,1.7vh,18px);
+  padding:clamp(12px,1.9vh,20px) clamp(12px,2vw,18px) max(60px,calc(52px + env(safe-area-inset-bottom)));
 }
 .live-preview{
-  min-height:clamp(44px,6vh,66px);
+  min-height:clamp(44px,6.2vh,66px);
 }
 .dock-phrases{
-  gap:clamp(6px,1vh,10px);
+  gap:clamp(7px,1.1vh,12px);
 }
 .dock-phrase{
-  min-height:clamp(36px,5.2vh,54px);
-  padding:clamp(6px,1vh,10px) 11px;
+  min-height:clamp(38px,5.5vh,56px);
+  padding:clamp(7px,1.05vh,11px) 11px;
 }
 .dock-controls{
-  gap:clamp(12px,1.8vh,18px);
-  margin-top:clamp(2px,.7vh,8px);
-  margin-bottom:max(34px,calc(28px + env(safe-area-inset-bottom)));
+  gap:clamp(16px,2.4vh,26px);
+  margin-top:clamp(8px,1.5vh,18px);
+  margin-bottom:max(44px,calc(38px + env(safe-area-inset-bottom)));
 }
 .dock-controls button,.dock-tools button{
-  min-height:clamp(50px,6.5vh,66px);
+  min-height:clamp(52px,6.8vh,70px);
 }
 .dock-tap{
-  min-height:clamp(96px,13vh,126px);
+  min-height:clamp(102px,13.5vh,132px);
   margin:0;
 }
 
 @media(max-width:560px){
   .app-header,main,footer{padding:10px 12px}
+  .title-row{align-items:flex-start}
   header h1{margin:8px 0 4px;font-size:24px}
   header p{margin:6px 0 8px;line-height:1.28;font-size:16px}
   .settingsButton{padding:9px 13px;min-height:40px}
+  body:not(.settings-mode) main{padding-top:2px}
   .tap-view{min-height:auto}
-  .tap-panel{margin:2px 0 max(14px,calc(10px + env(safe-area-inset-bottom)));border-radius:24px}
+  .tap-panel{margin:2px 0 max(18px,calc(14px + env(safe-area-inset-bottom)));border-radius:24px}
   .tap-panel-inner{
     min-height:0;
     justify-content:flex-start;
-    padding:10px 10px max(54px,calc(48px + env(safe-area-inset-bottom)));
+    padding:10px 10px max(72px,calc(64px + env(safe-area-inset-bottom)));
     gap:8px;
   }
   .dock-topline{font-size:13px}
@@ -290,16 +300,16 @@ input[type=range]{width:100%}
   .dock-next .dock-text{font-size:clamp(16px,4.6vw,24px)}
   .dock-next-next .dock-text{font-size:clamp(14px,4vw,20px)}
   .dock-controls{
-    gap:12px;
-    margin-top:2px;
-    margin-bottom:max(40px,calc(34px + env(safe-area-inset-bottom)));
+    gap:14px;
+    margin-top:10px;
+    margin-bottom:max(58px,calc(52px + env(safe-area-inset-bottom)));
   }
   .dock-tools{grid-template-columns:1.2fr .78fr .68fr;gap:10px}
   .dock-controls button,.dock-tools button{min-height:54px;padding:8px 6px}
   .dock-small{font-size:clamp(15px,4.2vw,22px)}
   .clearTap{font-size:clamp(18px,5.3vw,28px)}
   .dock-tap{
-    min-height:100px;
+    min-height:104px;
     font-size:clamp(44px,14vw,72px);
     border-radius:24px;
     margin:0;
@@ -309,11 +319,11 @@ input[type=range]{width:100%}
 @media(max-height:650px){
   header p{font-size:14px;line-height:1.22;margin:4px 0 6px}
   header h1{font-size:22px;margin-top:6px}
-  .tap-panel-inner{min-height:0;gap:6px;padding:8px 9px max(40px,calc(34px + env(safe-area-inset-bottom)))}
+  .tap-panel-inner{min-height:0;gap:6px;padding:8px 9px max(54px,calc(48px + env(safe-area-inset-bottom)))}
   .live-preview{min-height:36px;padding:6px 8px}
   .dock-phrases{gap:5px}
   .dock-phrase{min-height:32px;padding:5px 8px}
-  .dock-controls{gap:8px;margin-bottom:max(28px,calc(22px + env(safe-area-inset-bottom)))}
+  .dock-controls{gap:10px;margin-top:6px;margin-bottom:max(44px,calc(38px + env(safe-area-inset-bottom)))}
   .dock-controls button,.dock-tools button{min-height:46px}
-  .dock-tap{min-height:82px;font-size:clamp(38px,13vw,62px)}
+  .dock-tap{min-height:86px;font-size:clamp(38px,13vw,62px)}
 }
